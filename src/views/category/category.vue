@@ -3,7 +3,7 @@
         <nav-bar class="nav-bar">
            <div slot="center">分类</div>
        </nav-bar>
-       <Scroll class="wrapper" ref="scroll" :probe-type="3" @scroll="scrollEvent" >
+       <Scroll class="wrapper" ref="scroll" :probe-type="3" :pull-up-load="true" @scroll="scrollEvent" @pullingUp="loadMore" >
        <ul class="content">
            <li>分类列表1</li>
            <li>分类列表2</li>
@@ -66,6 +66,7 @@
     import NavBar from 'components/common/navBar/NavBar'
     import Scroll from 'components/common/scroll/BScroll'
     import BackTop from 'components/context/backTop/BackTop'
+import { constants } from 'crypto';
 
     export default {
         components: {
@@ -81,11 +82,14 @@
        
         methods: {
             scrollEvent(position) {
-                console.log(position)
                 this.showTop = -position.y > 1000
             },
             scrollTop() {
                 this.$refs.scroll.scrollTo(0, 0)
+            },
+            loadMore(){
+                console.log("上拉加载更多...")
+                this.$refs.scroll.finishPullUp()
             }
         }
     }
